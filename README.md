@@ -3,7 +3,7 @@
 ![alt text](logo.jpg)
 a spin on "Explain Like I'm 5"—but for people who want expert-level nuance.
 
-Check it out at [elie-zii2.onrender.com](https://elie-zii2.onrender.com/) or [try it out locally](#to-run-locally).
+Check it out at [https://elie-l51t.onrender.com/](https://elie-l51t.onrender.com/) or [try it out locally](#to-run-locally).
 
 ELIE is an interactive [Dash Plotly app](https://dash.plotly.com/) that dynamically tailors explanations to your current knowledge.
 
@@ -18,7 +18,7 @@ ELIE is an interactive [Dash Plotly app](https://dash.plotly.com/) that dynamica
 
 Clone the repository:
 ```bash
-git clone https://github.com/niksirbi/ELIE.git
+git clone https://github.com/tomashrdlicka/ELIE.git
 cd ELIE
 ```
 
@@ -31,6 +31,11 @@ conda activate elie-env
 Install the package:
 ```bash
 pip install -e .
+```
+
+Set up your Google Gemini API key:
+```bash
+export GEMINI_API_KEY="your_api_key_here"
 ```
 
 Launch the dash-plotly app:
