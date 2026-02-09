@@ -15,7 +15,7 @@ else:
     print("WARNING: GEMINI_API_KEY environment variable not set. LLM calls will fail.")
 
 # You can choose a different model if needed, e.g., "gemini-1.5-flash"
-GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
 
 def call_gemini_llm(prompt: str) -> str:
     """
