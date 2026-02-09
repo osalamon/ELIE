@@ -9,13 +9,13 @@ from prompting import build_further_prompt, parse_terms # Assuming these functio
 # It's highly recommended to load this from environment variables for security.
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-if GEMINI_API_KEY is None:
-    raise ValueError("GEMINI_API_KEY environment variable not set.")
-
-genai.configure(api_key=GEMINI_API_KEY)
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+else:
+    print("WARNING: GEMINI_API_KEY environment variable not set. LLM calls will fail.")
 
 # You can choose a different model if needed, e.g., "gemini-1.5-flash"
-GEMINI_MODEL_NAME = "gemini-2.0-flash" 
+GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
 def call_gemini_llm(prompt: str) -> str:
     """

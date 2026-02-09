@@ -18,7 +18,13 @@ from graph_manager import GraphManager
 from callback_handlers import CallbackHandlers
 
 # Initialize Dash app
-app = dash.Dash(__name__, suppress_callback_exceptions=True)
+app = dash.Dash(
+    __name__,
+    suppress_callback_exceptions=True,
+    dev_tools_hot_reload=False,
+    dev_tools_ui=False,
+    dev_tools_props_check=False,
+)
 server = app.server
 
 # Set custom HTML template
@@ -91,4 +97,4 @@ def style_submit_btn(flash):
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT", DEFAULT_PORT))
-    app.run(debug=False, host="0.0.0.0", port=port, dev_tools_ui=False, dev_tools_props_check=False)
+    app.run(debug=False, host="0.0.0.0", port=port, dev_tools_ui=False, dev_tools_props_check=False, dev_tools_hot_reload=False)
