@@ -18,9 +18,9 @@ from graph_manager import GraphManager
 from callback_handlers import CallbackHandlers
 
 # Initialize Dash app
-app = dash.Dash(
-    __name__,
-    suppress_callback_exceptions=True,
+app = dash.Dash(__name__, suppress_callback_exceptions=True)
+app.enable_dev_tools(
+    debug=False,
     dev_tools_hot_reload=False,
     dev_tools_ui=False,
     dev_tools_props_check=False,
