@@ -7,15 +7,15 @@ import os
 import dash
 
 # Import modular components
-from config import DEFAULT_PORT, HTML_TEMPLATE
-from components import (
-    create_data_stores, create_timers, create_control_panel, 
-    create_info_box, create_graph_container, create_sidebar, 
+from elie.config import DEFAULT_PORT, HTML_TEMPLATE
+from elie.components import (
+    create_data_stores, create_timers, create_control_panel,
+    create_info_box, create_graph_container, create_sidebar,
     create_main_layout, create_graph_component, create_info_box_content
 )
-from state_manager import StateManager
-from graph_manager import GraphManager
-from callback_handlers import CallbackHandlers
+from elie.state_manager import StateManager
+from elie.graph_manager import GraphManager
+from elie.callback_handlers import CallbackHandlers
 
 # Initialize Dash app
 app = dash.Dash(__name__, suppress_callback_exceptions=True)
@@ -78,7 +78,7 @@ callback_handlers = CallbackHandlers(app)
 )
 def style_submit_btn(flash):
     """Style submit button based on flash state"""
-    from config import BUTTON_STYLES, COLORS, ANIMATION_CONFIG
+    from elie.config import BUTTON_STYLES, COLORS, ANIMATION_CONFIG
     
     base_style = {
         **BUTTON_STYLES["base"],

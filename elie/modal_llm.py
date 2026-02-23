@@ -71,7 +71,7 @@ def serve():
         api_key,
     ]
 
-    subprocess.Popen(" ".join(cmd), shell=True)
+    subprocess.Popen(cmd)
 
 
 @app.local_entrypoint()

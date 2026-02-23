@@ -4,12 +4,12 @@ Organizes all Dash callbacks into logical groups and functions
 """
 
 from dash import Input, Output, State, ALL, ctx, no_update
-from components import (
-    create_graph_component, create_info_box_content, 
+from elie.components import (
+    create_graph_component, create_info_box_content,
     create_suggested_concepts_section
 )
-from state_manager import StateManager
-from graph_manager import GraphManager
+from elie.state_manager import StateManager
+from elie.graph_manager import GraphManager
 
 
 class CallbackHandlers:

@@ -5,7 +5,7 @@ Handles graph layout, positioning, visualization, and figure generation
 
 import numpy as np
 import plotly.graph_objs as go
-from config import GRAPH_CONFIG, COLORS
+from elie.config import GRAPH_CONFIG, COLORS
 
 
 class GraphManager:

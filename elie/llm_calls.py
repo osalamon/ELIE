@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from elie.prompting import *
+from elie.prompting import build_further_prompt, parse_terms
 
 # READ modal LLM API endpoint and key from environment variables
 LLM_ENDPOINT = os.getenv("LLM_ENDPOINT")

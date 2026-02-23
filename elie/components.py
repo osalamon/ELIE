@@ -4,8 +4,8 @@ Contains factory functions for creating reusable UI components
 """
 
 from dash import dcc, html
-from config import (
-    APP_TITLE, COLORS, BUTTON_STYLES, INPUT_STYLES, LAYOUT_STYLES, 
+from elie.config import (
+    APP_TITLE, COLORS, BUTTON_STYLES, INPUT_STYLES, LAYOUT_STYLES,
     GRAPH_STYLES, OVERLAY_STYLES, ICONS, HOW_IT_WORKS_MD, ANIMATION_CONFIG
 )
 

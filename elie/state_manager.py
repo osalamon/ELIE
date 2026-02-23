@@ -3,15 +3,19 @@ State Management module for ELIE app
 Handles application state logic, LLM interactions, and state transitions
 """
 
+import copy
+import logging
 import time
 import json
 import base64
-from gemini_calls import call_gemini_llm
-from prompting import (
+from elie.gemini_calls import call_gemini_llm
+from elie.prompting import (
     build_starter_prompt, parse_terms, build_further_prompt,
     build_short_final_prompt, build_long_final_prompt, get_more_concepts
 )
-from config import HOW_IT_WORKS_MD, LLM_CONFIG
+from elie.config import HOW_IT_WORKS_MD, LLM_CONFIG
+
+logger = logging.getLogger(__name__)
 
 
 class StateManager:
@@ -62,12 +66,11 @@ class StateManager:
                     # Return raw response for explanation prompts
                     return llm_response
                     
-            except Exception as e:
-                print(f"LLM call/parsing failed (attempt {attempt + 1}). Error: {e}")
+            except Exception:
+                logger.exception("LLM call/parsing failed (attempt %d/%d)", attempt + 1, max_retries)
                 if attempt < max_retries - 1:
                     time.sleep(LLM_CONFIG["retry_delay"])
                 else:
-                    print(f"Failed after {max_retries} attempts")
                     return None
         
         return None
@@ -115,7 +118,7 @@ class StateManager:
         if clicked_node in state['clicked_nodes_list']:
             return state  # Already expanded
         
-        new_state = state.copy()
+        new_state = copy.deepcopy(state)
         new_state['clicked_nodes_list'].append(clicked_node)
         if clicked_node in new_state['unclicked_nodes']:
             new_state['unclicked_nodes'].remove(clicked_node)
@@ -180,8 +183,8 @@ class StateManager:
             # Parse comma-separated concepts (no distances/breadths)
             suggestions = [s.strip() for s in llm_response.split(",") if s.strip()][:LLM_CONFIG["suggestion_terms"]]
             return suggestions
-        except Exception as e:
-            print(f"Failed to get suggested concepts: {e}")
+        except Exception:
+            logger.exception("Failed to get suggested concepts")
             return []
     
     @staticmethod
@@ -202,8 +205,8 @@ class StateManager:
             StateManager.recompute_node_distances(new_state['node_data'])
             return new_state
             
-        except Exception as e:
-            print(f"Failed to load state from upload: {e}")
+        except Exception:
+            logger.exception("Failed to load state from upload")
             return None
     
     @staticmethod
@@ -232,7 +235,7 @@ class StateManager:
             term, included, excluded, new_length_flag
         )
         
-        new_state = state.copy()
+        new_state = copy.deepcopy(state)
         new_state['explanation_paragraph'] = new_explanation
         
         return new_state
