@@ -14,7 +14,7 @@ if GEMINI_API_KEY:
 else:
     print("WARNING: GEMINI_API_KEY environment variable not set. LLM calls will fail.")
 
-GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
+GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
 # interaction = client.interactions.create(
 #     model="gemini-3.5-flash",
@@ -34,24 +34,12 @@ def call_gemini_llm(prompt: str) -> str:
         str: The generated content from the Gemini model, or an error message.
     """
     try:
-        prpt = client.models.generate_content(GEMINI_MODEL_NAME)
-        # print(f"Sending message to Gemini model: {GEMINI_MODEL_NAME}")
-        # print(f"Prompt: {prompt}")
-
-        # Use generate_content for single turn conversations
-        response = client.generate_content(prpt)
-
-        # Access the generated text
-        if response.candidates:
-            # Each candidate has a 'content' attribute, which in turn has 'parts'
-            # We are interested in the 'text' part of the first content part of the first candidate.
-            if response.candidates[0].content.parts:
-                return response.candidates[0].content.parts[0].text
-            else:
-                return "❌ Error: No content parts found in Gemini response."
-        else:
-            return "❌ Error: No candidates found in Gemini response."
-
+        response = client.models.generate_content(
+            model=GEMINI_MODEL_NAME,
+            contents=prompt
+        )
+        # The response object has a .text property that returns the text of the first candidate
+        return response.text
     except Exception as e:
         return f"❌ An unexpected error occurred: {e}"
 
