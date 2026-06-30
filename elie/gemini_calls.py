@@ -1,5 +1,9 @@
 import os
+from dotenv import load_dotenv
 from google import genai
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Assuming prompting is a custom module, we'll keep its import.
 # If it's not relevant to the Gemini API, you might remove it.
