@@ -10,7 +10,7 @@ dependencies = [
     "numpy",
     "requests",
     "gunicorn>=20.0.4",
-    "google-generativeai",
+    "google-genai",
     "plotly"
 ]
 

@@ -1,5 +1,5 @@
 import os
-from google import generativeai as genai # Updated import for generativeai
+from google import genai
 
 # Assuming prompting is a custom module, we'll keep its import.
 # If it's not relevant to the Gemini API, you might remove it.
@@ -10,12 +10,18 @@ from elie.prompting import build_further_prompt, parse_terms
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
+    client = genai.Client(api_key=GEMINI_API_KEY)
 else:
     print("WARNING: GEMINI_API_KEY environment variable not set. LLM calls will fail.")
 
-# You can choose a different model if needed, e.g., "gemini-1.5-flash"
-GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-2.5-flash-lite")
+GEMINI_MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
+
+# interaction = client.interactions.create(
+#     model="gemini-3.5-flash",
+#     input="Explain how AI works in a few words"
+# )
+# print(interaction.output_text)
+
 
 def call_gemini_llm(prompt: str) -> str:
     """
@@ -28,12 +34,12 @@ def call_gemini_llm(prompt: str) -> str:
         str: The generated content from the Gemini model, or an error message.
     """
     try:
-        model = genai.GenerativeModel(GEMINI_MODEL_NAME)
-        #print(f"Sending message to Gemini model: {GEMINI_MODEL_NAME}")
-        #print(f"Prompt: {prompt}")
+        prpt = client.models.generate_content(GEMINI_MODEL_NAME)
+        # print(f"Sending message to Gemini model: {GEMINI_MODEL_NAME}")
+        # print(f"Prompt: {prompt}")
 
         # Use generate_content for single turn conversations
-        response = model.generate_content(prompt)
+        response = client.generate_content(prpt)
 
         # Access the generated text
         if response.candidates:
@@ -49,9 +55,12 @@ def call_gemini_llm(prompt: str) -> str:
     except Exception as e:
         return f"❌ An unexpected error occurred: {e}"
 
+
 if __name__ == "__main__":
     # Example usage with build_further_prompt (assuming it's defined in elie.prompting)
-    prompt_for_gemini = build_further_prompt("quaternion", ["3D", "4D"], ["vectors", "rotation matrices"])
+    prompt_for_gemini = build_further_prompt(
+        "quaternion", ["3D", "4D"], ["vectors", "rotation matrices"]
+    )
     response = call_gemini_llm(prompt_for_gemini)
     print(f"Gemini LLM response: {response}")
 
